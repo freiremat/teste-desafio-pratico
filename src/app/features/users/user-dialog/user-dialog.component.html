@@ -8,7 +8,7 @@
     <mat-form-field appearance="outline">
       <mat-label>Usuário (e-mail)</mat-label>
       <input matInput formControlName="email" type="email" />
-      <mat-error>E-mail é obrigatório</mat-error>
+      <mat-error>E-mail inválido</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline">
@@ -20,14 +20,14 @@
     <div class="flex gap-4">
       <mat-form-field appearance="outline" class="w-1/2">
         <mat-label>CPF</mat-label>
-        <input matInput formControlName="cpf" />
-        <mat-error>CPF é obrigatório</mat-error>
+        <input matInput formControlName="cpf" mask="000.000.000-00" [dropSpecialCharacters]="false" />
+        <mat-error>CPF inválido</mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="w-1/4">
         <mat-label>Número do telefone</mat-label>
-        <input matInput formControlName="phone" />
-        <mat-error>Telefone é obrigatório</mat-error>
+        <input matInput formControlName="phone" mask="(00) 00000-0000" [dropSpecialCharacters]="false" />
+        <mat-error>Telefone inválido</mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="w-1/4">

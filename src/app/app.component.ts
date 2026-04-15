@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet, NavigationEnd } from '@angular/router';
 import { UsersService } from './features/users/services/users.service';
-import { filter, map } from 'rxjs';
+import { Subject } from 'rxjs';
+import { filter, map, debounceTime, switchMap, takeUntil } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
 
 // Angular Material imports
@@ -32,7 +33,11 @@ import { MatTooltipModule } from '@angular/material/tooltip';
   ],
   templateUrl: './app.component.html',
 })
-export class AppComponent {
+export class AppComponent implements OnInit, OnDestroy {
+
+  private destroy$ = new Subject<void>();
+  private searchSubject = new Subject<string>();
+
   pageTitle = toSignal(
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd),
@@ -43,7 +48,24 @@ export class AppComponent {
 
   constructor(private readonly router: Router, private readonly usersService: UsersService) {}
 
+  ngOnInit() {
+    this.searchSubject.pipe(
+      debounceTime(300),
+      switchMap(query => this.usersService.getUsers().pipe(
+        map(() => query)
+      )),
+      takeUntil(this.destroy$)
+    ).subscribe(query => {
+      this.usersService.searchQuery.set(query);
+    });
+  }
+
   onSearch(value: string) {
-    this.usersService.searchQuery.set(value);
+    this.searchSubject.next(value);
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

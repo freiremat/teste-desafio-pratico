@@ -1,5 +1,6 @@
-import { Component, computed } from '@angular/core';
+import { Component, OnDestroy, OnInit, computed, signal } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Subject, takeUntil } from 'rxjs';
 import { UsersService } from '../services/users.service';
 import { User } from '../models/user.model';
 import { UserDialogComponent } from '../user-dialog/user-dialog.component';
@@ -14,16 +15,32 @@ import { MatTooltipModule } from '@angular/material/tooltip';
   imports: [MatTableModule, MatIconModule, MatButtonModule, MatTooltipModule],
   templateUrl: './users-page.component.html',
 })
-export class UsersPageComponent {
+export class UsersPageComponent implements OnInit, OnDestroy {
 
-  constructor(private usersService: UsersService, private dialog: MatDialog) {}
+  private destroy$ = new Subject<void>();
+  private allUsers = signal<User[]>([]);
 
   filteredUsers = computed(() => {
     const query = this.usersService.searchQuery().toLowerCase();
-    return this.usersService.getUsers().filter(user =>
+    return this.allUsers().filter(user =>
       user.name.toLowerCase().includes(query)
     );
   });
+
+  constructor(private usersService: UsersService, private dialog: MatDialog) {}
+
+  ngOnInit() {
+    this.usersService.getUsers().pipe(
+      takeUntil(this.destroy$)
+    ).subscribe(users => {
+      this.allUsers.set(users);
+    });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   openCreate() {
     this.dialog.open(UserDialogComponent, { data: null, width: '600px' });

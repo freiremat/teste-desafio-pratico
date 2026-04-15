@@ -1,27 +1,90 @@
-# DesafioAttus
+# Desafio Técnico — Listagem de Usuários
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.17.
+Aplicação Angular desenvolvida para o desafio técnico.
 
-## Development server
+---
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Tecnologias utilizadas
 
-## Code scaffolding
+| Tecnologia | Versão |
+|---|---|
+| Node.js | 20.20.2 |
+| npm | 10.8.2 |
+| Angular | 17.3.x |
+| Angular Material | 17.3.x |
+| Angular CDK | 17.3.x |
+| TypeScript | 5.4.x |
+| RxJS | 7.8.x |
+| ngx-mask | 21.x |
+| Tailwind CSS | 3.4.x |
+| Jest | 30.x |
+| jest-preset-angular | 16.x |
+| zone.js | 0.14.x |
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+---
 
-## Build
+## Pré-requisitos
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+- **Node.js** `>= 20` — [nodejs.org](https://nodejs.org)
+- **npm** `>= 10`
 
-## Running unit tests
+Verifique suas versões:
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+```bash
+node --version
+npm --version
+```
 
-## Running end-to-end tests
+---
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## Instalação
 
-## Further help
+Clone o repositório e instale as dependências:
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+```bash
+git clone <url-do-repositorio>
+cd teste-desafio-pratico
+npm install
+```
+
+---
+
+## Executando o projeto
+
+```bash
+npm start
+```
+
+Acesse em: `http://localhost:4200`
+
+---
+
+## Executando os testes
+
+Rodar todos os testes:
+
+```bash
+npm test
+```
+
+---
+
+## Funcionalidades implementadas
+
+- Listagem de usuários em tabela com nome, e-mail e ações
+- Busca por nome com debounce de 300ms
+- Modal de criação de novo usuário
+- Modal de edição com formulário preenchido automaticamente
+- Formulário reativo com validação de e-mail, nome, CPF e telefone
+- Máscara de input para CPF (`000.000.000-00`) e telefone (`(00) 00000-0000`) via ngx-mask
+- Notificaçoes via MatSnackBar ao criar ou editar usuário
+- Botão salvar desabilitado enquanto o formulário estiver inválido
+- Mensagens de erro em inputs mandatórios
+
+## Decisões técnicas
+
+- **Angular Signals + computed** para reatividade local do estado de usuários
+- **RxJS** com `debounceTime`, `switchMap`, `takeUntil` e `map` para gerenciamento de subscriptions sem memory leaks
+- **Componentes standalone** — sem NgModules
+- **destroy$ pattern** com `Subject` + `takeUntil` para limpeza de subscriptions no `ngOnDestroy`
+- **Dados mockados** array estático no `UsersService`

@@ -1,1 +1,20 @@
-<p>users-page works!</p>
+<div class="w-3/4 mx-auto">
+
+<p class="text-sm text-gray-500 mb-2">Usuários cadastrados</p>
+
+<mat-list class="bg-white rounded shadow-sm">
+  @for (user of users; track user.id) {
+    <mat-list-item class="border-b last:border-b-0">
+      <mat-icon matListItemIcon class="text-gray-400">person</mat-icon>
+      <span matListItemTitle class="flex items-center justify-around">
+        <span class="font-semibold">{{ user.name }}</span>
+        <span class="text-gray-500 text-sm">{{ user.email }}</span>
+      </span>
+      <button mat-icon-button matListItemMeta>
+        <mat-icon class="text-gray-400">edit</mat-icon>
+      </button>
+    </mat-list-item>
+  }
+</mat-list>
+
+</div>

@@ -27,15 +27,10 @@ export class UsersPageComponent implements OnInit, OnDestroy {
     );
   });
 
-  constructor(private usersService: UsersService, private dialog: MatDialog) {}
+  constructor(private usersService: UsersService, private dialog: MatDialog) { }
 
   ngOnInit() {
     this.loadUsers();
-  }
-
-  ngOnDestroy() {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 
   private loadUsers() {
@@ -58,5 +53,10 @@ export class UsersPageComponent implements OnInit, OnDestroy {
       .afterClosed().pipe(takeUntil(this.destroy$)).subscribe(saved => {
         if (saved) this.loadUsers();
       });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

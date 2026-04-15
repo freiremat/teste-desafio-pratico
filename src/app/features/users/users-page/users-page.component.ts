@@ -1,13 +1,14 @@
 import { Component, computed } from '@angular/core';
 import { UsersService } from '../services/users.service';
-import { MatListModule } from '@angular/material/list';
+import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-users-page',
   standalone: true,
-  imports: [MatListModule, MatIconModule, MatButtonModule],
+  imports: [MatTableModule, MatIconModule, MatButtonModule, MatTooltipModule],
   templateUrl: './users-page.component.html',
 })
 export class UsersPageComponent {

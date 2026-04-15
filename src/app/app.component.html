@@ -37,7 +37,13 @@
           subscriptSizing="dynamic"
         >
           <mat-icon matPrefix>search</mat-icon>
-          <input #searchInput matInput placeholder="Pesquisar..." class="!placeholder-white/70 !text-white" (input)="onSearch(searchInput.value)" />
+          <input
+            #searchInput
+            matInput
+            placeholder="Pesquisar..."
+            class="!placeholder-white/70 !text-white"
+            (input)="onSearch(searchInput.value)"
+          />
         </mat-form-field>
       </div>
     </mat-toolbar>
@@ -47,3 +53,14 @@
     </main>
   </mat-sidenav-content>
 </mat-sidenav-container>
+
+<div class="fixed bottom-6 right-6 z-50">
+  <button
+    mat-fab
+    color="primary"
+    matTooltip="Adicionar usuário"
+    matTooltipPosition="left"
+  >
+    <mat-icon>add</mat-icon>
+  </button>
+</div>

@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 
 import { UsersPageComponent } from './users-page.component';
 
@@ -10,8 +10,8 @@ describe('UsersPageComponent', () => {
     await TestBed.configureTestingModule({
       imports: [UsersPageComponent]
     })
-    .compileComponents();
-    
+      .compileComponents();
+
     fixture = TestBed.createComponent(UsersPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -19,5 +19,15 @@ describe('UsersPageComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('Deve cancelar as inscrições (unsubscribe) e encerrar os subjects ao destruir o componente', () => {
+    const destroyNextSpy = jest.spyOn((component as any).destroy$, 'next');
+    const destroyCompleteSpy = jest.spyOn((component as any).destroy$, 'complete');
+
+    component.ngOnDestroy();
+
+    expect(destroyNextSpy).toHaveBeenCalled();
+    expect(destroyCompleteSpy).toHaveBeenCalled();
   });
 });

@@ -1,14 +1,15 @@
 <mat-sidenav-container class="h-screen">
-
   <mat-sidenav #sidenav mode="over" class="w-60">
     <mat-toolbar color="primary">
       <span class="text-sm font-medium tracking-widest uppercase">Menu</span>
     </mat-toolbar>
     <mat-nav-list>
-      <a mat-list-item
-         routerLink="/users"
-         routerLinkActive="bg-indigo-50"
-         (click)="sidenav.close()">
+      <a
+        mat-list-item
+        routerLink="/users"
+        routerLinkActive="bg-indigo-50"
+        (click)="sidenav.close()"
+      >
         <mat-icon matListItemIcon>people</mat-icon>
         <span matListItemTitle>Listagem de Usuários</span>
       </a>
@@ -17,17 +18,32 @@
 
   <mat-sidenav-content class="flex flex-col">
     <mat-toolbar color="primary" class="sticky top-0 z-10 shadow-md">
-      <button mat-icon-button (click)="sidenav.toggle()" aria-label="Abrir menu">
+      <button
+        mat-icon-button
+        class="!outline-none !shadow-none !ring-0"
+        (click)="sidenav.toggle()"
+        aria-label="Abrir menu"
+      >
         <mat-icon>menu</mat-icon>
       </button>
       <span class="ml-2 text-sm font-medium tracking-widest uppercase">
         {{ pageTitle() }}
       </span>
+
+      <div class="flex-1 flex items-center justify-evenly">
+        <mat-form-field
+          appearance="outline"
+          class="w-80"
+          subscriptSizing="dynamic"
+        >
+          <mat-icon matPrefix>search</mat-icon>
+          <input #searchInput matInput placeholder="Pesquisar..." class="!placeholder-white/70 !text-white" (input)="onSearch(searchInput.value)" />
+        </mat-form-field>
+      </div>
     </mat-toolbar>
 
     <main class="flex-1 p-6 bg-gray-50">
       <router-outlet />
     </main>
   </mat-sidenav-content>
-
 </mat-sidenav-container>

@@ -1,9 +1,9 @@
 <div class="w-3/4 mx-auto">
 
-<p class="text-sm text-gray-500 mb-2">Usuários cadastrados</p>
+<p class="text-lg text-gray-500 mb-2">Usuários cadastrados</p>
 
 <mat-list class="bg-white rounded shadow-sm">
-  @for (user of users; track user.id) {
+  @for (user of filteredUsers(); track user.id) {
     <mat-list-item class="border-b last:border-b-0">
       <mat-icon matListItemIcon class="text-gray-400">person</mat-icon>
       <span matListItemTitle class="flex items-center justify-around">

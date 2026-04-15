@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet, NavigationEnd } from '@angular/router';
+import { UsersService } from './features/users/services/users.service';
 import { filter, map } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
 
@@ -9,6 +10,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-root',
@@ -22,6 +25,8 @@ import { MatButtonModule } from '@angular/material/button';
     MatListModule,
     MatIconModule,
     MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
   ],
   templateUrl: './app.component.html',
 })
@@ -34,5 +39,9 @@ export class AppComponent {
     { initialValue: '' }
   );
 
-  constructor(private readonly router: Router) {}
+  constructor(private readonly router: Router, private readonly usersService: UsersService) {}
+
+  onSearch(value: string) {
+    this.usersService.searchQuery.set(value);
+  }
 }

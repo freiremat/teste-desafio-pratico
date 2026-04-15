@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, computed } from '@angular/core';
 import { UsersService } from '../services/users.service';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
@@ -14,7 +14,10 @@ export class UsersPageComponent {
 
   constructor(private usersService: UsersService) { }
 
-  get users() {
-    return this.usersService.getUsers();
-  }
+  filteredUsers = computed(() => {
+    const query = this.usersService.searchQuery().toLowerCase();
+    return this.usersService.getUsers().filter(user =>
+      user.name.toLowerCase().includes(query)
+    );
+  });
 }

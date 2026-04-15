@@ -50,6 +50,6 @@
 </mat-dialog-content>
 
 <mat-dialog-actions align="start">
-  <button mat-flat-button color="primary" type="button" [disabled]="form.invalid">SALVAR</button>
+  <button mat-flat-button color="primary" type="button" [disabled]="form.invalid" (click)="save()">SALVAR</button>
   <button mat-stroked-button type="button" (click)="close()">CANCELAR</button>
 </mat-dialog-actions>

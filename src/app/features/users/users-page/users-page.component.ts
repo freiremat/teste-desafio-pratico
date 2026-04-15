@@ -30,11 +30,7 @@ export class UsersPageComponent implements OnInit, OnDestroy {
   constructor(private usersService: UsersService, private dialog: MatDialog) {}
 
   ngOnInit() {
-    this.usersService.getUsers().pipe(
-      takeUntil(this.destroy$)
-    ).subscribe(users => {
-      this.allUsers.set(users);
-    });
+    this.loadUsers();
   }
 
   ngOnDestroy() {
@@ -42,11 +38,25 @@ export class UsersPageComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
+  private loadUsers() {
+    this.usersService.getUsers().pipe(
+      takeUntil(this.destroy$)
+    ).subscribe(users => {
+      this.allUsers.set([...users]);
+    });
+  }
+
   openCreate() {
-    this.dialog.open(UserDialogComponent, { data: null, width: '600px' });
+    this.dialog.open(UserDialogComponent, { data: null, width: '600px' })
+      .afterClosed().pipe(takeUntil(this.destroy$)).subscribe(saved => {
+        if (saved) this.loadUsers();
+      });
   }
 
   openEdit(user: User) {
-    this.dialog.open(UserDialogComponent, { data: user, width: '600px' });
+    this.dialog.open(UserDialogComponent, { data: user, width: '600px' })
+      .afterClosed().pipe(takeUntil(this.destroy$)).subscribe(saved => {
+        if (saved) this.loadUsers();
+      });
   }
 }

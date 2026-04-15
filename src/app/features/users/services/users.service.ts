@@ -41,4 +41,14 @@ export class UsersService {
   getUsers(): Observable<User[]> {
     return of(this.users);
   }
+
+  addUser(user: User): void {
+    const newId = this.users.length + 1;
+    this.users.push({ ...user, id: newId });
+  }
+
+  updateUser(updated: User): void {
+    const index = this.users.findIndex(u => u.id === updated.id);
+    if (index !== -1) this.users[index] = updated;
+  }
 }
